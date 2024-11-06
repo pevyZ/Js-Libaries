@@ -1,0 +1,16 @@
+{
+  "name": "inm320-json",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server --baseDir=\"public\""
+  },
+  "keywords": [],
+  "author": "pevy",
+  "license": "public",
+  "private":"true",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
