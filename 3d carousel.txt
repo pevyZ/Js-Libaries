@@ -197,3 +197,23 @@ function getBgPos(i){ //returns the background-position string to create paralla
                 </div>
             </div>
         </section>
+
+ // ____________________Hero JS_______________________
+// document.addEventListener("DOMContentLoaded", function () {
+//     const openMenuButton = document.querySelector(".flex.lg\\:hidden button"); 
+//     const closeMenuButton = document.querySelector('div[role="dialog"] button'); 
+//     const mobileMenu = document.querySelector('div[role="dialog"]'); 
+  
+//     // Function to open the menu
+//     function openMenu() {
+//       mobileMenu.classList.remove("hidden");
+//     }
+  
+//     // Function to close the menu
+//     function closeMenu() {
+//       mobileMenu.classList.add("hidden");
+//     }
+  
+//     openMenuButton.addEventListener("click", openMenu);
+//     closeMenuButton.addEventListener("click", closeMenu);
+//   });
