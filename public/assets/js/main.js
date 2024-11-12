@@ -30,3 +30,60 @@ document.addEventListener('click', function(event) {
       contactList.style.display = 'block'; // Show the contact list
   }
 });
+
+
+
+
+// show and hide NEW ARRIVALS section
+
+
+
+
+
+
+
+// Carousel JS
+$(window).on("load",function(){
+
+  var boxes = $(".box"),ß
+      stage = $(".stage");
+  
+  TweenLite.set(stage, {
+    css: {
+      perspective: 1100,
+      transformStyle: "preserve-3d"
+    }
+  });
+  
+  boxes.each(function(index, element) {
+    TweenLite.set(element, {
+      css: {
+        rotationY: index * 360 / 13,
+        transformOrigin: "50% 50% -420"
+      }
+    });
+    TweenMax.to(element, 20, {
+      css: {
+        z:0.01,
+        rotationY: "+=359"
+      },
+      repeat: -1, // 20
+      ease: Linear.easeNone
+    });
+  }); 
+  });
+
+  mobiscroll.settings = {
+    theme: 'ios',
+    themeVariant: 'light'
+  }
+
+  $(function () {
+
+      $('.demo-cards').mobiscroll().scrollview({
+          layout: 'fixed',
+          itemWidth: 134,
+          snap: false
+      });
+
+  });

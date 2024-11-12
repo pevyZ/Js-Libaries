@@ -5,33 +5,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Funiture Website</title>
         <link rel="stylesheet" href="./assets/css/style.css">
+        <!-- Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <!-- UIkit -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/css/uikit.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit-icons.min.js"></script>
-        <script src="https://cdn.tailwindcss.com"></script> 
+        <!-- Jquery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- gsap -->
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/CSSPlugin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
+        <!-- swiper -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
     </head>
     <body>  
         <!-- Hro section -->
         <header>
-            <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; end: + *; offset: 80">
-                <nav class="uk-navbar-container">
-                    <div class="uk-container">
+            <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; end: + *; offset: 0">
+                <nav id="navBar" class="uk-navbar-container bg-white">
+                    <div  class="uk-container">
                         <div uk-navbar="dropbar: true; dropbar-anchor: !.uk-navbar-container; target-y: !.uk-navbar-container">
-            
                             <div class="uk-navbar-left">
-            
                                 <ul class="uk-navbar-nav">
-                                    <li class="uk-active"><a href="#"><img src="assets/images/Shopify-About-Us_HAY-Logo_67a5ace2-a0af-4318-9679-fecc9eeb8cc9_480x480.webp" alt="Logo" width="50" height="50"></a></li>
+                                    <li id="hayLogo" class="uk-active"><a href="#" onclick="toggleNavbar()"><img src="assets/images/Shopify-About-Us_HAY-Logo_67a5ace2-a0af-4318-9679-fecc9eeb8cc9_480x480.webp" alt="Logo" width="50" height="50"></a></li>
                                     <li id="productList">
-                                        <a href="#" class="text-secondary fw-bold">Product</a>
+                                        <a href="#" class="text-secondary fw-semibold">Product</a>
                                         <div class="uk-navbar-dropdown">
                                             <ul class="uk-nav uk-navbar-dropdown-nav">
-                                                <li class="uk-active"><a href="#">NEW ARRIVAILS</a></li>
+                                                <li class="uk-active"><a href="#newArrivals">NEW ARRIVAILS</a></li>
                                                 <li class="uk-nav-divider"></li>
                                                 <li class="uk-nav-header">All PRODUCT</li>
                                                 <li><a href="#">Funiture</a></li>
@@ -40,7 +45,7 @@
                                         </div>
                                     </li>
                                     <li id="contactList">
-                                        <a href="#" class="text-secondary fw-bold">Contact Us</a>
+                                        <a href="#" class="text-secondary fw-semibold">Contact Us</a>
                                         <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
                                             <div class="uk-drop-grid uk-child-width-1-2" uk-grid>
                                                 <div>
@@ -72,9 +77,9 @@
                             </div>
                             <div class="uk-navbar-right">
                                 <div class="search-container">
-                                    <svg id="searchIcon" onclick="toggleSearch()" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-                                        <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
-                                    </svg>
+                                    <svg id="searchIcon" onclick="toggleSearch()" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 50 50">
+                                      <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"></path>
+                                      </svg>
                                     <input type="search" id="searchInput" class="form-control form-control-dark" placeholder="Search..." aria-label="Search" style="display: none;">
                                 </div>
                             </div>
@@ -83,18 +88,138 @@
                     </div>
                 </nav>
             </div>
-            <div class="uk-section uk-section-secondary uk-background-cover" style="background-image: url('images/dark.jpg');">
-                <div class="uk-container">
-            
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
-            
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-            
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
-            
+            <div id="signIn" class="uk-section uk-section-secondary uk-background-cover" style="background-image: url('assets/images/HAY\ Icon\ 10.jpg');">
+                <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+                    <div class="row align-items-center g-lg-5 py-5">
+                      <div class="col-lg-7 text-center text-lg-start mb-4">
+                        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3 text-uppercase bg-white">Sign up for 10% discount</h1>
+                        <p class="col-lg-10 fs-5 text-white bg-dark">Sign up now to enjoy a 10% discount on your first purchase. Join our community for exclusive offers and updates!</p>
+                      </div>
+                      <div class="col-md-10 mx-auto col-lg-5 text-secondary">
+                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                          <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email address</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                          </div>
+                          <div class="checkbox mb-3">
+                            <label>
+                              <input type="checkbox" value="remember-me"> Remember me
+                            </label>
+                          </div>
+                          <button class="w-100 btn btn-lg btn-dark" type="submit">Sign up</button>
+                          <hr class="my-4">
+                          <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
+                        </form>
+                      </div>
+                    </div>
                 </div>
             </div>    
         </header>
+        <main>
+            <!-- Carousel Section -->
+            <section id="carousel" class="container">
+                <div class="col-lg-7 text-center mb-4">
+                    <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3 text-uppercase">Discover Your Style</h1>
+                </div>
+                <div>
+                </div>
+                <div class="demoWrapper mt-5">
+                    <div class="stage">
+                      <div class="box">
+                        <img src="assets/images/carousel1.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel2.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel13.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel3.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel4.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel5.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel6.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel7.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel8.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel9.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel10.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel11.png" width="285" height="285">
+                      </div>
+                      <div class="box">
+                        <img src="assets/images/carousel12.png" width="285" height="285">
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-lg btn-dark" type="submit">Explore</button>
+                  <div class="stage">
+                </div>
+            </section>
+        </main>
+
+        <section class="container" id="newArrivals">
+          <h2 class="display-4 fw-bold lh-1 text-body-emphasis mb-3 text-uppercase">New Arrivals</h2>
+          
+        </section>
+
+        <!-- footer -->
+        <div id="footer" class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+              <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+                    </a>
+                    <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Pevy Zeng</span>
+              </div>
+              
+              <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                    <!-- Instagram Icon -->
+                    <li class="ms-3">
+                        <a href="https://www.instagram.com" class="text-body-secondary" target="_blank" rel="noopener noreferrer">
+                            <svg style="fill: currentColor;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M 8 3 C 5.239 3 3 5.239 3 8 L 3 16 C 3 18.761 5.239 21 8 21 L 16 21 C 18.761 21 21 18.761 21 16 L 21 8 C 21 5.239 18.761 3 16 3 L 8 3 z M 18 5 C 18.552 5 19 5.448 19 6 C 19 6.552 18.552 7 18 7 C 17.448 7 17 6.552 17 6 C 17 5.448 17.448 5 18 5 z M 12 7 C 14.761 7 17 9.239 17 12 C 17 14.761 14.761 17 12 17 C 9.239 17 7 14.761 7 12 C 7 9.239 9.239 7 12 7 z M 12 9 A 3 3 0 0 0 9 12 A 3 3 0 0 0 12 15 A 3 3 0 0 0 15 12 A 3 3 0 0 0 12 9 z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <!-- Facebook Icon -->
+                    <li class="ms-3">
+                        <a href="https://www.facebook.com" class="text-body-secondary" target="_blank" rel="noopener noreferrer">
+                            <svg style="fill: currentColor;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M12,2C6.477,2,2,6.477,2,12c0,5.013,3.693,9.153,8.505,9.876V14.65H8.031v-2.629h2.474v-1.749 c0-2.896,1.411-4.167,3.818-4.167c1.153,0,1.762,0.085,2.051,0.124v2.294h-1.642c-1.022,0-1.379,0.969-1.379,2.061v1.437h2.995 l-0.406,2.629h-2.588v7.247C18.235,21.236,22,17.062,22,12C22,6.477,17.523,2,12,2z"></path>
+                        </svg>
+                        </a>
+                    </li>
+                    <!-- Twitter Icon -->
+                    <li class="ms-3">
+                        <a href="https://www.twitter.com" class="text-body-secondary" target="_blank" rel="noopener noreferrer">
+                            <svg style="fill: currentColor;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M22,3.999c-0.78,0.463-2.345,1.094-3.265,1.276c-0.027,0.007-0.049,0.016-0.075,0.023c-0.813-0.802-1.927-1.299-3.16-1.299 c-2.485,0-4.5,2.015-4.5,4.5c0,0.131-0.011,0.372,0,0.5c-3.353,0-5.905-1.756-7.735-4c-0.199,0.5-0.286,1.29-0.286,2.032 c0,1.401,1.095,2.777,2.8,3.63c-0.314,0.081-0.66,0.139-1.02,0.139c-0.581,0-1.196-0.153-1.759-0.617c0,0.017,0,0.033,0,0.051 c0,1.958,2.078,3.291,3.926,3.662c-0.375,0.221-1.131,0.243-1.5,0.243c-0.26,0-1.18-0.119-1.426-0.165 c0.514,1.605,2.368,2.507,4.135,2.539c-1.382,1.084-2.341,1.486-5.171,1.486H2C3.788,19.145,6.065,20,8.347,20 C15.777,20,20,14.337,20,8.999c0-0.086-0.002-0.266-0.005-0.447C19.995,8.534,20,8.517,20,8.499c0-0.027-0.008-0.053-0.008-0.08 c-0.003-0.136-0.006-0.263-0.009-0.329c0.79-0.57,1.475-1.281,2.017-2.091c-0.725,0.322-1.503,0.538-2.32,0.636 C20.514,6.135,21.699,4.943,22,3.999z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+                <p  class="mb-3 mb-md-0 text-body-secondary text-center w-100">HAY ApS Havnen 3, 8700 Horsens, Denmark +45 3164 6000 </p>           
+            </footer>
+        </div>
         
         <script src="/assets/js/main.js"></script>
     </body>
