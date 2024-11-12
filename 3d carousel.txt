@@ -1,219 +1,130 @@
-html:
 
-<div class="container">
-  <div id="ring">
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-    <div class="img"></div>
-  </div>
+Html:
+
+<p>
+  <label><input type="checkbox" value=".red" /> red</label>
+  <label><input type="checkbox" value=".green" /> green</label>
+  <label><input type="checkbox" value=".blue" /> blue</label>
+  <label><input type="checkbox" value=".orange" /> orange</label>
+</p>
+
+  <p id="output">-——————————-</p>
+  
 </div>
-<!-- <div class="vignette"></div> -->
+
+<div id="container">
+  <!-- items added with JS -->
+</div>
 
 
+css_______
 
+* {  box-sizing: border-box; }
 
-CSS
-<div id="dragger"></div>
+body { font-family: sans-serif; }
 
-html, body, #dragger, #ring, .img, .vignette {
-  width:100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  user-select:none;
-}
-
-html, body {
-  overflow:hidden;
-  background:#000;
-}
-
-div {
-  position: absolute;
-}
-*******
-.container {
-  perspective: 2000px;
-  width: 150px;
-  height: 150px;  
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-}
-
-.vignette {
-  width:1400px;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(to left, rgba(0,0,0,1) 12%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 88%);
-}
-
-
-JS
-
-let xPos = 0;
-
-gsap.timeline()
-    .set(dragger, { opacity:0 }) //make the drag layer invisible
-    .set(ring,    { rotationY:180 }) //set initial rotationY so the parallax jump happens off screen
-    .set(ring,    { rotationX: 15 }) 
-    .set('.img',  { // apply transform rotations to each image
-      rotateY: (i)=> i*-36,
-      transformOrigin: '50% 50% 250px',  *******
-      z: -500,
-      backgroundImage:(i)=>'url(https://picsum.photos/id/'+(i+32)+'/700/300/)',
-      backgroundPosition:(i)=>getBgPos(i),
-      // backfaceVisibility:'hidden'
-    })    
-    .from('.img', {
-      duration:1.5,
-      y:200,
-      opacity:0,
-      stagger:0.1,
-      ease:'expo'
-    })
-
-Draggable.create(dragger, {
+.item {
+  width: 400px;
+  height: 500px;
+  float: left;
   
-  onDragStart:(e)=>{ 
-    if (e.touches) e.clientX = e.touches[0].clientX;
-    xPos = Math.round(e.clientX);
-  },
-  
-  onDrag:(e)=>{
-    if (e.touches) e.clientX = e.touches[0].clientX;    
-    
-    gsap.to(ring, {
-      rotationY: '-=' +( (Math.round(e.clientX)-xPos)%360 ),
-      onUpdate: ()=>{gsap.set('.img', { backgroundPosition:(i)=>getBgPos(i) }) }
+  margin: 5px;
+  padding: 10px;
+}
+
+.item p {
+  margin: 10px;
+}
+
+.red { background: #F33; }
+.blue { background: #88F; }
+.green { background: #3A3; }
+.orange { background: orange;}
+
+select, label, input { font-size: 20px; }
+
+label { margin-right: 10px; }
+
+
+JS:
+
+createItems();
+
+var $container = $('#container').isotope({
+  itemSelector: '.item'
+});
+
+var $output = $('#output');
+
+// filter with selects and checkboxes
+var $selects = $('#form-ui select');
+var $checkboxes = $('#form-ui input');
+
+$selects.add( $checkboxes ).change( function() {
+  // map input values to an array
+  var exclusives = [];
+  var inclusives = [];
+  // exclusive filters from selects
+  $selects.each( function( i, elem ) {
+    if ( elem.value ) {
+      exclusives.push( elem.value );
+    }
+  });
+  // inclusive filters from checkboxes
+  $checkboxes.each( function( i, elem ) {
+    // if checkbox, use value if checked
+    if ( elem.checked ) {
+      inclusives.push( elem.value );
+    }
+  });
+
+  // combine exclusive and inclusive filters
+
+  // first combine exclusives
+  exclusives = exclusives.join('');
+
+  var filterValue;
+  if ( inclusives.length ) {
+    // map inclusives with exclusives for
+    filterValue = $.map( inclusives, function( value ) {
+      return value + exclusives;
     });
-    
-    xPos = Math.round(e.clientX);
-  },
-  
-  onDragEnd:()=> {
-    // gsap.to(ring, { rotationY: Math.round(gsap.getProperty(ring,'rotationY')/36)*36 }) // move to nearest photo...at the expense of the inertia effect
-    gsap.set(dragger, {x:0, y:0}) // reset drag layer
+    filterValue = filterValue.join(', ');
+  } else {
+    filterValue = exclusives;
   }
+
+  $output.text( filterValue );
+  $container.isotope({ filter: filterValue })
+});
+
+
+function createItems() {
+
+  var colors = [ 'red', 'green', 'blue', 'orange' ];
+  var sizes = [ 'small', 'medium', 'large' ];
+  var prices = [ 10, 20, 30 ];
+
   
-})
+  var $items;
+  // loop over colors, sizes, prices
+  // create one item for each
+  for (  var i=0; i < colors.length; i++ ) {
+    for ( var j=0; j < sizes.length; j++ ) {
+      for ( var k=0; k < prices.length; k++ ) {
+        var color = colors[i];
+        var size = sizes[j];
+        var price = prices[k];
+        var $item = $('<div />', {
+          'class': 'item ' + color + ' ' + size + ' price' + price
+        });
+        $item.append( '<p>' + size + '</p><p>$' + price + '</p>');
+        // add to items
+        $items = $items ? $items.add( $item ) : $item;
+      }
+    } 
+  }
 
+  $items.appendTo( $('#container') );
 
-function getBgPos(i){ //returns the background-position string to create parallax movement in each image
-  return ( -gsap.utils.wrap(0,360,gsap.getProperty(ring, 'rotationY')-180-i*36)/360*400 )+'px 0px';
 }
-
-
-
-
-<section class="bg-white">
-            <header class="absolute inset-x-0 top-0 z-50">
-            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                <div class="flex lg:flex-1">
-                <a href="#" class="-m-1.5 p-1.5">
-                    <span class="sr-only">Your Company</span>
-                    <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
-                </a>
-                </div>
-                <div class="flex lg:hidden">
-                <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                </button>
-                </div>
-                <div class="hidden lg:flex lg:gap-x-12">
-                <a href="#" class="text-sm/6 font-semibold text-gray-900">Product</a>
-                <a href="#" class="text-sm/6 font-semibold text-gray-900">Features</a>
-                <a href="#" class="text-sm/6 font-semibold text-gray-900">Marketplace</a>
-                <a href="#" class="text-sm/6 font-semibold text-gray-900">Company</a>
-                </div>
-                <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                <a href="#" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
-                </div>
-            </nav>
-                 <!-- Mobile menu, show/hide based on menu open state. -->
-            <div class="lg:hidden" role="dialog" aria-modal="true">
-                 <!-- Background backdrop, show/hide based on slide-over state. -->
-                <div class="fixed inset-0 z-50"></div>
-                <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                <div class="flex items-center justify-between">
-                    <a href="#" class="-m-1.5 p-1.5">
-                    <span class="sr-only">Your Company</span>
-                    <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
-                    </a>
-                    <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-                    <span class="sr-only">Close menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                    </button>
-                </div>
-                <div class="mt-6 flow-root">
-                    <div class="-my-6 divide-y divide-gray-500/10">
-                    <div class="space-y-2 py-6">
-                        <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Product</a>
-                        <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Features</a>
-                        <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Marketplace</a>
-                        <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Company</a>
-                    </div>
-                    <div class="py-6">
-                        <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </header>
-    
-            <div class="relative isolate px-6 pt-14 lg:px-8">
-                <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-                    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-                </div>
-                <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-                    <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-                    <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                        Announcing our next round of funding. <a href="#" class="font-semibold text-indigo-600"><span class="absolute inset-0" aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a>
-                    </div>
-                    </div>
-                    <div class="text-center">
-                    <h1 class="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Data to enrich your online business</h1>
-                    <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.</p>
-                    <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
-                        <a href="#" class="text-sm/6 font-semibold text-gray-900">Learn more <span aria-hidden="true">→</span></a>
-                    </div>
-                    </div>
-                </div>
-                <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-                    <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-                </div>
-            </div>
-        </section>
-
- // ____________________Hero JS_______________________
-// document.addEventListener("DOMContentLoaded", function () {
-//     const openMenuButton = document.querySelector(".flex.lg\\:hidden button"); 
-//     const closeMenuButton = document.querySelector('div[role="dialog"] button'); 
-//     const mobileMenu = document.querySelector('div[role="dialog"]'); 
-  
-//     // Function to open the menu
-//     function openMenu() {
-//       mobileMenu.classList.remove("hidden");
-//     }
-  
-//     // Function to close the menu
-//     function closeMenu() {
-//       mobileMenu.classList.add("hidden");
-//     }
-  
-//     openMenuButton.addEventListener("click", openMenu);
-//     closeMenuButton.addEventListener("click", closeMenu);
-//   });

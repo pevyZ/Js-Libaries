@@ -73,17 +73,3 @@ $(window).on("load",function(){
   }); 
   });
 
-  mobiscroll.settings = {
-    theme: 'ios',
-    themeVariant: 'light'
-  }
-
-  $(function () {
-
-      $('.demo-cards').mobiscroll().scrollview({
-          layout: 'fixed',
-          itemWidth: 134,
-          snap: false
-      });
-
-  });
