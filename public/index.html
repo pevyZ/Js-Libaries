@@ -19,14 +19,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/CSSPlugin.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
-        <!-- swiper -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
+        <!-- isotope -->
+        <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     </head>
     <body>  
         <!-- Hro section -->
         <header>
-            <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; end: + *; offset: 0">
-                <nav id="navBar" class="uk-navbar-container bg-white">
+            <div id="navBar" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; end: + *; offset: 0">
+                <nav  class="uk-navbar-container bg-white">
                     <div  class="uk-container">
                         <div uk-navbar="dropbar: true; dropbar-anchor: !.uk-navbar-container; target-y: !.uk-navbar-container">
                             <div class="uk-navbar-left">
@@ -174,12 +174,31 @@
                   <div class="stage">
                 </div>
             </section>
+            <section class="container" id="newArrivals">
+              <h2 class="display-4 fw-bold lh-1 text-body-emphasis mb-3 text-uppercase">Products</h2>
+              <section class="container" id="newArrivals">
+                <div id="form-ui">
+                  <label class="col-lg-2 fs-4 text-secondary fw-bold">
+                    <input type="checkbox" value="New Arrivals" /> New Arrivals
+                  </label>
+                  <label class="col-lg-2 fs-4 text-secondary fw-bold">
+                    <input type="checkbox" value="Furniture" /> Furniture
+                  </label>
+                  <label class="col-lg-2 fs-4 text-secondary fw-bold">
+                    <input type="checkbox" value="Accessories" /> Accessories
+                  </label>
+                </div>
+              
+                <p id="output"></p>
+              
+                <div id="container" class="clear">
+                  <!-- items added with JS -->
+                </div>
+              </section>
+            </section>
         </main>
 
-        <section class="container" id="newArrivals">
-          <h2 class="display-4 fw-bold lh-1 text-body-emphasis mb-3 text-uppercase">New Arrivals</h2>
-          
-        </section>
+
 
         <!-- footer -->
         <div id="footer" class="container mt-5">
@@ -229,7 +248,7 @@
                   </li>
               </ul>
           </footer>
-      </div>
+        </div>
       
         </div> 
         <script src="/assets/js/main.js"></script>
