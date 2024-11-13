@@ -1,3 +1,4 @@
+// Nav Bar serach icon hide and show
 function toggleSearch() {
   const searchInput = document.getElementById('searchInput');
   const searchIcon = document.getElementById('searchIcon');
@@ -40,14 +41,14 @@ $(window).on("load",function(){
 
   var boxes = $(".box"),ß
       stage = $(".stage");
-  
+
   TweenLite.set(stage, {
     css: {
       perspective: 1100,
       transformStyle: "preserve-3d"
     }
   });
-  
+
   boxes.each(function(index, element) {
     TweenLite.set(element, {
       css: {
@@ -64,11 +65,12 @@ $(window).on("load",function(){
       ease: Linear.easeNone
     });
   }); 
-  });
+});
 
 
-// isotope-------------------------------
 
+
+// isotope
 // Define function to create items and populate #container
 function createItems() {
   $('#container').empty(); // Clear existing items
@@ -127,14 +129,14 @@ const styles = `
     font-family: 'Crimson Pro', serif;
   }
 `;
-
 // Append styles to the document head
 $('<style>').prop('type', 'text/css').html(styles).appendTo('head');
-
 // Initial population of items
 createItems();
 
 
+
+// Leaflet map
 document.addEventListener("DOMContentLoaded", function () {
   var mapContainer = document.getElementById("map");
   if (mapContainer) {
