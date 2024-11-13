@@ -21,6 +21,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
         <!-- isotope -->
         <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     </head>
     <body>  
         <!-- Hro section -->
@@ -46,32 +49,6 @@
                                     </li>
                                     <li id="contactList">
                                         <a href="#" class="text-secondary fw-semibold">Contact Us</a>
-                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
-                                            <div class="uk-drop-grid uk-child-width-1-2" uk-grid>
-                                                <div>
-                                                    <ul class="uk-nav uk-navbar-dropdown-nav">
-                                                        <li class="uk-active"><a href="#">Active</a></li>
-                                                        <li><a href="#">Item</a></li>
-                                                        <li class="uk-nav-header">Header</li>
-                                                        <li><a href="#">Item</a></li>
-                                                        <li><a href="#">Item</a></li>
-                                                        <li class="uk-nav-divider"></li>
-                                                        <li><a href="#">Item</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div>
-                                                    <ul class="uk-nav uk-navbar-dropdown-nav">
-                                                        <li class="uk-active"><a href="#">Active</a></li>
-                                                        <li><a href="#">Item</a></li>
-                                                        <li class="uk-nav-header">Header</li>
-                                                        <li><a href="#">Item</a></li>
-                                                        <li><a href="#">Item</a></li>
-                                                        <li class="uk-nav-divider"></li>
-                                                        <li><a href="#">Item</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -119,7 +96,7 @@
                 </div>
             </div>    
         </header>
-        <main>
+        <main  class="container d-flex flex-column align-items-center">
             <!-- Carousel Section -->
             <section id="carousel" class="container">
                 <div class="col-lg-7 text-center mb-4">
@@ -176,8 +153,8 @@
             </section>
             <section class="container" id="newArrivals">
               <h2 class="display-4 fw-bold lh-1 text-body-emphasis mb-3 text-uppercase">Products</h2>
-              <section class="container" id="newArrivals">
-                <div id="form-ui">
+              <section class="container">
+                                <!-- <div id="form-ui">
                   <label class="col-lg-2 fs-4 text-secondary fw-bold">
                     <input type="checkbox" value="New Arrivals" /> New Arrivals
                   </label>
@@ -187,7 +164,7 @@
                   <label class="col-lg-2 fs-4 text-secondary fw-bold">
                     <input type="checkbox" value="Accessories" /> Accessories
                   </label>
-                </div>
+                </div> -->
               
                 <p id="output"></p>
               
@@ -199,23 +176,22 @@
         </main>
 
 
-
         <!-- footer -->
-        <div id="footer" class="container mt-5">
-          <footer class="d-flex flex-column align-items-center py-3 my-4 border-top">
-              <!-- Logo Section -->
-              <li id="hayLogo" class="mb-3 w-100 d-flex justify-content-center align-items-center mt-5">
+        <div id="footer" class="container-fluid mt-5">
+          <footer class="uk-section uk-section-muted uk-padding uk-text-center">
+            <li id="hayLogo" class="mb-3 w-100 d-flex justify-content-center align-items-center mt-5">
                   <a href="#" onclick="toggleNavbar()">
                       <img src="assets/images/Shopify-About-Us_HAY-Logo_67a5ace2-a0af-4318-9679-fecc9eeb8cc9_480x480.webp" alt="Logo" width="50" height="50">
                   </a>
               </li>
       
-              <!-- Address Section -->
               <p class="mb-3 text-body-secondary text-center w-100">
                   HAY ApS Havnen 3, 8700 Horsens, Denmark +45 3164 6000
               </p>
+
+              <!-- MAP -->
+              <div id="map" class="d-flex align-items-center justify-content-center" style="height: 300px; max-width: 500px;"></div>
       
-              <!-- Copyright Section -->
               <div class="col-md-4 d-flex flex-column align-items-center text-center mb-3">
                   <a href="/" class="text-body-secondary text-decoration-none lh-1">
                       <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
@@ -223,7 +199,6 @@
                   <span class="text-body-secondary">&copy; 2024 Pevy Zeng</span>
               </div>
       
-              <!-- Social Media Icons -->
               <ul class="nav d-flex justify-content-center list-unstyled">
                   <li class="ms-3">
                       <a href="https://www.instagram.com" class="text-body-secondary" target="_blank" rel="noopener noreferrer">
@@ -249,8 +224,6 @@
               </ul>
           </footer>
         </div>
-      
-        </div> 
         <script src="/assets/js/main.js"></script>
     </body>
 

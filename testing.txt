@@ -34,6 +34,13 @@ document.addEventListener('click', function(event) {
 
 
 
+// show and hide NEW ARRIVALS section
+
+
+
+
+
+
 
 // Carousel JS
 $(window).on("load",function(){
@@ -68,6 +75,50 @@ $(window).on("load",function(){
 
 
 // isotope-------------------------------
+// Initialize the Isotope filtering after creating items
+createItems(); // Populate items first
+
+var $container = $('#container').isotope({
+  itemSelector: '.item' // Selector for Isotope item filtering
+});
+
+var $output = $('#output'); // Display active filter results
+
+// Set up filtering with selects and checkboxes
+var $selects = $('#form-ui select');
+var $checkboxes = $('#form-ui input');
+
+// Listen for changes on selects and checkboxes for filtering
+$selects.add($checkboxes).change(function() {
+  var exclusives = [];
+  var inclusives = [];
+
+  // Capture values from select elements (exclusives)
+  $selects.each(function(i, elem) {
+    if (elem.value) {
+      exclusives.push(elem.value);
+    }
+  });
+
+  // Capture values from checked checkboxes (inclusives)
+  $checkboxes.each(function(i, elem) {
+    if (elem.checked) {
+      inclusives.push(elem.value);
+    }
+  });
+
+  // Combine exclusive and inclusive filters
+  var filterValue = exclusives.join(''); // Exclusive filters
+
+  if (inclusives.length) {
+    filterValue = $.map(inclusives, function(value) {
+      return value + filterValue;
+    }).join(', ');
+  }
+
+  $output.text(filterValue); // Show active filter combination
+  $container.isotope({ filter: filterValue }); // Apply Isotope filter
+});
 
 // Define function to create items and populate #container
 function createItems() {
@@ -131,22 +182,155 @@ const styles = `
 // Append styles to the document head
 $('<style>').prop('type', 'text/css').html(styles).appendTo('head');
 
+
+
+
+
+// Function to filter items based on selected categories
+function filterItems() {
+  var selectedCategories = [];
+
+  // Collect all selected categories
+  $('#form-ui input[type="checkbox"]:checked').each(function() {
+    selectedCategories.push($(this).val());
+  });
+
+  // If no checkbox is selected, show all items with '*', otherwise filter
+  var filterValue = selectedCategories.length ? selectedCategories.map(cat => `[data-category="${cat}"]`).join(', ') : '*';
+  $container.isotope({ filter: filterValue }); // Apply the filter to Isotope
+}
+
+// Bind change event to filter items whenever a checkbox is changed
+$('#form-ui input[type="checkbox"]').on('change', filterItems);
+
+
 // Initial population of items
 createItems();
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  var mapContainer = document.getElementById("map");
-  if (mapContainer) {
-      var map = L.map("map").setView([55.8607, 9.8503], 13);
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 19,
-          attribution: "© OpenStreetMap contributors"
-      }).addTo(map);
-
-      L.marker([55.8607, 9.8503]).addTo(map)
-          .bindPopup("HAY ApS, Havnen 3, 8700 Horsens, Denmark")
-          .openPopup();
+#carousel{
+    background-color: white;
+    height: 600px;
+    overflow: hidden; 
+    clip-path: inset(0); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
   }
-});
+  
+  .demoWrapper {
+    width: 680px;
+    height: 300px;
+    -webkit-font-smoothing: antialiased;
+    /* margin: 50px auto; */
+    padding: 1px;
+  }
+  
+  .stage {
+    height: 325px;
+    margin-top: 15px;
+    margin-left: 15px;
+    color: #ddd;
+    margin-right: 10px;
+    font-family: Arial, Helvetica, Verdana;
+    position:relative;
+  }
+  
+  .box {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background-color: #06f;
+    display: inline-block;
+    margin: 10px 20px 20px 235px; 
+    display: inline-block;
+  }
+  
+  .box > img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    border:1px solid #DDD;
+    outline:0 solid transparent;
+    overflow: hidden;
+    }
+
+
+/* isotope */
+    * {  box-sizing: border-box; }
+    
+    .item {
+      width: 300px; 
+      height: 400px; 
+      margin: 10px auto; 
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+      background-color: #f9f9f9;
+      box-sizing: border-box;
+  }
+    .item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.3s ease; 
+  }
+    .item:hover img {
+      transform: scale(1.3); 
+    }
+
+  #output {
+    display: none;
+  }
+  .hidden-section {
+  display: none !important;
+}
+
+
+  
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    transition: 0.3s;
+  }
+  
+
+
+  .hidden-section {
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+  footer {
+      clear: both; 
+      width: 100%;
+  }
+
+    
+/* Big screen adjustment
+ */
+@media (min-width: 667px) {
+    #carousel {
+        clip-path: none;
+        overflow: none;
+    }
+}
